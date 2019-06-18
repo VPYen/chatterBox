@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Chatter Box</title>
+        <link rel='stylesheet' type="text/css" href="/css/style.css" />
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script type="text/javascript" src="/javascript/chat.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div id="chatBox">
+                <ul id=messages></ul>
+            </div>
+            <form id="chatForm" action="">
+                <input type="text" id="chatinput" name="chatinput" placeholder="Enter a message" />
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </body>
+</html>
