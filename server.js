@@ -12,29 +12,66 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    let login = new Date();
-    let time = login.toTimeString();
-    let date = login.toLocaleDateString();
-
-    console.log(`A user connected: (${date} | ${time})`)
+    let log = new Date();
+    let time = log.toTimeString();
+    let date = log.toLocaleDateString();
+    let users = [];
+    let messages = [];
+    let username = 'ChattyPerson' + socket.conn.server.clientsCount;
     
-    io.emit('connected', { log: 'Connection established with server....', date: date, time: time });
+    // Log Users
+    console.log(username);
+    console.log(`A user connected: (${date} | ${time})`)
+    console.log(socket.request.connection._peername);
+    console.log();
+
+    // Establish session with new user on connection
+    io.emit('connected', { 
+        messages: messages,
+        username: username, 
+        log: 'Connection established with server....', 
+        date: date, 
+        time: time
+    });
+
+    io.emit('user log', {
+        users: users
+    });
+
+    socket.on('user log', (data) => {
+        console.log(data);
+    });
 
     socket.on('disconnect', () => {
-        let logout = new Date();
-        let time = logout.toTimeString();
-        let date = logout.toLocaleDateString();
+        log = new Date();
+        time = log.toTimeString();
+        date = log.toLocaleDateString();
+
         console.log(`A user disconnected: (${date} | ${time})`);
-        io.emit('disconnected', { log: 'Disconnected from server....', date: date, time: time });
+
+        io.emit('disconnected', { 
+            log: 'Disconnected from server....',
+            username: username,
+            date: date, 
+            time: time 
+        });
     });
 
     socket.on('chat message', (msg) =>{
-        console.log('message: ' + msg);
-        io.emit('chat message', { msg: msg });
+        log = new Date();
+        time = log.toTimeString();
+        date = log.toLocaleDateString();
+
+        console.log(`${username} (${date} | ${time}): ${msg}`);
+
+        io.emit('chat message', {
+            msg: msg,
+            username: username, 
+        });
     });
 });
 
 
 http.listen(43511, () => {
-    console.log('Listening on port: 43511');
+    console.log('Listening on port: 43511 \n');
 });

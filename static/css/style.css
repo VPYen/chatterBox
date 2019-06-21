@@ -3,34 +3,68 @@ body {
 }
 
 .container {
-    width: 50vw;
+    width: 70vw;
     padding: 15px;
     display: flex;
     margin: 0 auto;
+    margin-top: 2%;
     border-radius: 5px;
-    background: beige;
     flex-direction: column;
     border: 5px solid gray;
+    background: whitesmoke;
     box-shadow: 1px 1px 10px 2px aquamarine;
 }
 
-#chatBox {
+.date {
+    color: white;
+}
+
+.msg {
+    color: lime;
+}
+
+.row {
+    width: 100%;
     display: flex;
-    height: 500px;
+}
+
+#chatBox, #userBox {
+    width: 75%;
+    display: flex;
+    height: 450px;
     flex-wrap: wrap;
     overflow-y: auto;
     border-radius: 2px;
-    border: 2px solid black;
+    background: black;
+    border: 4px inset gray;
     box-shadow: 1px 1px 10px 2px black;
 }
 
+#userBox {
+    width: 25%;
+    margin-left: 10px;
+    flex-direction: column;
+    border: 4px inset black;
+    background: antiquewhite;
+}
+
+#userBox h3 {
+    padding: 2px;
+    margin: 10px;
+    text-align: center;
+    background: darkgray;
+    border: 5px double black;
+    box-shadow: 2px 2px 8px 2px black;
+}
+
 #chatBox ul {
+    color: white;
     font-size: 14px;
     list-style-type: none;
 }
 
 #chatBox li {
-    margin: 10px;
+    margin: 10px 0 10px 0;
 }
 
 #chatBox .login {
@@ -45,7 +79,7 @@ body {
 
 #chatForm {
     display: flex;
-    margin: 5px 0px 5px 0px;
+    margin: 10px 0px 5px 0px;
 }
 
 #chatForm button {
@@ -58,11 +92,11 @@ body {
     background: lightseagreen;
     box-shadow: 0px 0px 8px 5px black;
     font-family: Comic Sans MS, Arial, Helvetica, sans-serif;
-
 }
 
 #chatinput {
-    width: 100%;
+    width: 62%;
+    padding: 5px;
     display: flex;
     border-radius: 2px;
     border: 2px solid black;

@@ -12,11 +12,17 @@
     </head>
     <body>
         <div class="container">
-            <div id="chatBox">
-                <ul id=messages></ul>
+            <div class="row">
+                <div id="chatBox">
+                    <ul id=messages></ul>
+                </div>
+                <div id="userBox">
+                    <h3>Users Online</h3>
+                    <ul id=userList></ul>
+                </div>
             </div>
             <form id="chatForm" action="">
-                <input type="text" id="chatinput" name="chatinput" placeholder="Enter a message" />
+                <input type="text" id="chatinput" name="chatinput" placeholder="Enter a message" autofocus />
                 <button type="submit">Send</button>
             </form>
         </div>
