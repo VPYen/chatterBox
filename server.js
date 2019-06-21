@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
     let date = log.toLocaleDateString();
     let users = [];
     let messages = [];
-    let username = 'ChattyPerson' + socket.conn.server.clientsCount;
+    let username = 'ChattyPerson ' + socket.conn.server.clientsCount;
     
     // Log Users
     console.log(username);
