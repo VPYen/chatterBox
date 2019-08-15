@@ -51,7 +51,7 @@ $(document).ready(() => {
         let date = log.toLocaleDateString();
         
         $('#messages').append($('<li>')
-        .text((`- ${data.username} (${time} | ${date}): `))
+        .text((`${data.username} (${time} | ${date}): `))
         .append($('<span class="msg">').text(`${data.msg}`)));
     });
 

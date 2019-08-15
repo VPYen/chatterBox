@@ -11,38 +11,33 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-
 io.on('connection', (socket) => {
     let log = new Date();
     let time = log.toTimeString();
     let date = log.toLocaleDateString();
-    let users = [];
     let messages = [];
     socket['username'] = 'ChattyPerson - '+ (socket.id).slice(0,4);
     
     // Log Users
-    console.log(`${socket.username} connected: (${date} | ${time})`)
+    console.log(`${socket['username']} connected: (${date} | ${time})`)
     console.log(socket.request.connection._peername);
     console.log("Number of users connected %s \n", socket.conn.server.clientsCount);   
 
     // Establish session with new user on connection
     io.emit('connected', { 
-        username: socket.username,
+        username: socket['username'],
         messages: messages,
         log: 'Connection established with server....', 
         date: date, 
         time: time
     });
 
-    socket.on('new user', (data, callback) => {
-        if(callback) {
-            callback(true);
-        }
-        users = [];
+    socket.on('new user', () => {
+        socket['users'] = [];
         for(let socketId in io.sockets.sockets) {
-            users.push(io.sockets.sockets[socketId]['username']);
+            socket['users'].push(io.sockets.sockets[socketId]['username']);
         };
-        console.log(users);
+        console.log('users', socket['users']);
         getUsers();
     });
 
@@ -50,18 +45,18 @@ io.on('connection', (socket) => {
         log = new Date();
         time = log.toTimeString();
         date = log.toLocaleDateString();
-        users.splice(users.indexOf(socket.username), 1);
-        
-        console.log(`\n${socket.username} disconnected: (${date} | ${time})`);
-        console.log("Number of users connected %s", users.length)
+        socket['users'].splice(socket['users'].indexOf(socket['username']), 1);
+
+        console.log(`\n${socket['username']} disconnected: (${date} | ${time})`);
+        console.log("Number of users connected %s", socket['users'].length)
         console.log();
         
         io.emit('disconnected', { 
             log: 'Disconnected from server....',
-            username: socket.username,
+            username: socket['username'],
             date: date, 
             time: time,
-            users: users
+            users: socket['users']
         });
     });
 
@@ -70,17 +65,17 @@ io.on('connection', (socket) => {
         time = log.toTimeString();
         date = log.toLocaleDateString();
 
-        console.log(`${socket.username} (${date} | ${time}): ${msg}`);
+        console.log(`${socket['username']} (${date} | ${time}): ${msg}`);
         
         // messages.append({username: username, date: date, time: time, msg: msg}); // throws runtime error
         io.emit('chat message', {
             msg: msg,
-            username: socket.username, 
+            username: socket['username'], 
         });
     });
 
     function getUsers() {
-        io.emit('get users', users);
+        io.emit('get users', socket['users']);
     }
 });
 
