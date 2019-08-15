@@ -48,6 +48,12 @@ body {
     background: antiquewhite;
 }
 
+#userBox .user {
+    color: black;
+    padding: 5px 10px 5px 0;
+    list-style-type: none;
+}
+
 #userBox h3 {
     padding: 2px;
     margin: 10px;

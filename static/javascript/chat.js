@@ -1,6 +1,16 @@
 $(document).ready(() => {
     const socket = io();
+    let $userList = $('#userList');
 
+    function updateUsers(users) {
+      let userList = '';
+      console.log(users);
+      for(let i = 0; i < users.length; i++) {
+        userList += `<li class='user' id=${users[i]}>${users[i]}</li>`
+      }
+      $userList.html(userList);
+    }
+    
     socket.on('connected', (data) => {
       console.log(data.log);
       console.log(data);
@@ -12,12 +22,14 @@ $(document).ready(() => {
       .text(`${data.username} has entered the room `)
       .append($('<span class="date">')
       .text(`(${time} | ${date})`)));
+      
+      socket.emit('new user', data.username);
     });
 
-    socket.on('user log', (data) => {
-        console.log(data)
+    socket.on('get users', users => {
+      updateUsers(users);
     });
-
+    
     socket.on('disconnected', (data) => {
         let log = new Date();
         let time = log.toLocaleTimeString();
@@ -29,6 +41,8 @@ $(document).ready(() => {
         .text(`${data.username} has left the room `)
         .append($('<span class="date">')
         .text(`(${time} | ${date})`)));
+
+        updateUsers(data.users);
     });
     
     socket.on('chat message', (data) =>{
