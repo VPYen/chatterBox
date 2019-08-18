@@ -1,23 +1,32 @@
 $(document).ready(() => {
     const socket = io();
+    let room = '';
+    let userImg = '../images/blankTransProfile.png';
     let $userList = $('#userList');
+    let $chatContainer = $('#chatContainer');
+    let $loginContainer = $('#loginContainer');
+    $chatContainer.hide();  
 
     function updateUsers(users) {
       let userList = '';
       console.log(users);
       for(let i = 0; i < users.length; i++) {
-        userList += `<li class='user' id=${users[i]}>${users[i]}</li>`
+        userList += `<li class='user' id=${users[i]}><img class="userImg" alt=" " src="${userImg}" />${users[i]}</li>`
       }
       $userList.html(userList);
     }
     
+    function editUser(username, room) {
+      socket.emit('edit user', {username: username, room: room});
+    }
+
     socket.on('connected', (data) => {
       console.log(data.log);
       console.log(data);
       let log = new Date();
       let time = log.toLocaleTimeString();
       let date = log.toLocaleDateString();
-      
+
       $('#messages').append($('<li class="login">')
       .text(`${data.username} has entered the room `)
       .append($('<span class="date">')
@@ -26,8 +35,9 @@ $(document).ready(() => {
       socket.emit('new user', data.username);
     });
 
-    socket.on('get users', users => {
-      updateUsers(users);
+    socket.on('get users', data => {
+      room = data.room;
+      updateUsers(data.users);
     });
     
     socket.on('disconnected', (data) => {
@@ -62,5 +72,16 @@ $(document).ready(() => {
 
         return false;
       });
+
+      
+    $("#loginForm").submit((event) => {
+      event.preventDefault();                                 // Prevents page reloading
+      // console.log($('#username').val(), $('#room').val());
+      editUser($('#username').val(), $('#room').val());       // Sends input value to server
+      $loginContainer.hide();
+      $chatContainer.show();
+
+      return false;
+    });
 
 });

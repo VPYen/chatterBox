@@ -15,7 +15,16 @@ body {
     box-shadow: 1px 1px 10px 2px aquamarine;
 }
 
+#loginContainer {
+    margin-top: 100px;
+    align-items: center;
+}
+
 .date {
+    color: darkgray;
+}
+
+.message {
     color: white;
 }
 
@@ -26,6 +35,36 @@ body {
 .row {
     width: 100%;
     display: flex;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+#loginContainer .inputgroup {
+    width: 250px;
+    margin: 0 0 25px 0;
+}
+
+#loginContainer input {
+    height: 28px;
+    border-radius: 4px;
+}
+
+#loginContainer button {
+    height: 30px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+    background: maroon;
+    border: 2px solid black;
+    box-shadow: 1px 1px 4px 2px black;
+}
+
+#loginContainer input:focus {
+    box-shadow: 1px 1px 10px 2px black;
 }
 
 #chatBox, #userBox {
@@ -50,8 +89,14 @@ body {
 
 #userBox .user {
     color: black;
-    padding: 5px 10px 5px 0;
     list-style-type: none;
+    padding: 5px 10px 5px 0;
+}
+
+#userBox .userImg {
+    width: 18px;
+    height: 18px;
+    padding: 0px 8px 0px 0px;
 }
 
 #userBox h3 {

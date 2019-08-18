@@ -4,14 +4,32 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Chatter Box</title>
-        <link rel='stylesheet' type="text/css" href="/css/style.css" />
+        <title>Chatter Box - Chat Room</title>
+        <link rel='stylesheet' type="text/css" href="/css/index.css" />
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <script type="text/javascript" src="/javascript/chat.js"></script>
     </head>
     <body>
-        <div class="container">
+        <div id="loginContainer" class="container">
+            <h1>Welcome to Chatter Box</h1>
+            <form id="loginForm" action="">
+                <div class="row">
+                    <div class="col inputgroup">
+                        <label for="username">Enter a username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter a Username" autofocus />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col inputgroup">
+                        <label for="room">Enter room name</label>
+                        <input type="text" id="room" name="room" placeholder="Enter a Room Name" />
+                    </div>
+                </div>
+                <button type="submit" style="float: right;">Enter Chat</button>
+            </form> 
+        </div>
+        <div id="chatContainer" class="container">
             <div class="row">
                 <div id="chatBox">
                     <ul id=messages></ul>
@@ -22,7 +40,7 @@
                 </div>
             </div>
             <form id="chatForm" action="">
-                <input type="text" id="chatinput" name="chatinput" placeholder="Enter a message" autofocus />
+                <input type="text" id="chatinput" name="chatinput" placeholder="Enter a Message" autofocus />
                 <button type="submit">Send</button>
             </form>
         </div>

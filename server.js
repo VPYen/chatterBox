@@ -13,31 +13,45 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     let log = new Date();
+    let room = '';
     let time = log.toTimeString();
     let date = log.toLocaleDateString();
     let messages = [];
+    socket['users'] = [];
     socket['username'] = 'ChattyPerson - '+ (socket.id).slice(0,4);
     
     // Log Users
-    console.log(`${socket['username']} connected: (${date} | ${time})`)
+    console.log(`ID: ${socket.id} connected: (${date} | ${time})`)
     console.log(socket.request.connection._peername);
     console.log("Number of users connected %s \n", socket.conn.server.clientsCount);   
 
-    // Establish session with new user on connection
-    io.emit('connected', { 
-        username: socket['username'],
-        messages: messages,
-        log: 'Connection established with server....', 
-        date: date, 
-        time: time
+    socket.on('new user', () => {
+        updateUsers();
+        // console.log('users', socket['users']);
+        getUsers();
     });
 
-    socket.on('new user', () => {
-        socket['users'] = [];
-        for(let socketId in io.sockets.sockets) {
-            socket['users'].push(io.sockets.sockets[socketId]['username']);
-        };
-        console.log('users', socket['users']);
+    socket.on('edit user', data => {
+        socket.join(data.room);
+        if(data.room !== '') {
+            room = data.room;
+        }
+        if(data.username !== '') {
+            socket['username'] = data.username;
+        }
+        console.log(`ID: ${socket.id} changed room to ${room}`);
+        console.log(`ID: ${socket.id} changed username to ${socket.username}`);
+        // Establish session with new user on connection
+        io.emit('connected', { 
+            date: date, 
+            time: time,
+            room: 'default',
+            messages: messages,
+            username: socket['username'],
+            log: 'Connection established with server....', 
+        });
+
+        updateUsers();
         getUsers();
     });
 
@@ -74,8 +88,15 @@ io.on('connection', (socket) => {
         });
     });
 
+    function updateUsers() {
+        socket['users'] = [];
+        for(let socketId in io.sockets.sockets) {
+            socket['users'].push(io.sockets.sockets[socketId]['username']);
+        };
+    }
+
     function getUsers() {
-        io.emit('get users', socket['users']);
+        io.emit('get users', {users: socket['users'], room: room});
     }
 });
 
