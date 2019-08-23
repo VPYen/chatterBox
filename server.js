@@ -32,15 +32,12 @@ io.on('connection', (socket) => {
     });
 
     socket.on('edit user', data => {
-        socket.join(data.room);
-        if(data.room !== '') {
-            room = data.room;
-        }
         if(data.username !== '') {
             socket['username'] = data.username;
         }
-        console.log(`ID: ${socket.id} changed room to ${room}`);
         console.log(`ID: ${socket.id} changed username to ${socket.username}`);
+        console.log();
+        
         // Establish session with new user on connection
         io.emit('connected', { 
             date: date, 

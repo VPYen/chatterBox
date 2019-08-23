@@ -16,8 +16,15 @@ body {
 }
 
 #loginContainer {
+    width: 40%;
+    height: 240px;
     margin-top: 100px;
     align-items: center;
+}
+
+#loginForm label {
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .date {
@@ -29,7 +36,7 @@ body {
 }
 
 .msg {
-    color: lime;
+    color: white;
 }
 
 .row {
@@ -119,7 +126,7 @@ body {
 }
 
 #chatBox .login {
-    color: green;
+    color: lime;
 }
 
 

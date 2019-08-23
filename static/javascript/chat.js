@@ -61,8 +61,10 @@ $(document).ready(() => {
         let date = log.toLocaleDateString();
         
         $('#messages').append($('<li>')
-        .text((`${data.username} (${time} | ${date}): `))
-        .append($('<span class="msg">').text(`${data.msg}`)));
+        .append($(`<img class="userImg" alt=" " src="${userImg}"/>`))
+        .text(`${data.username} `)
+        .append($('<span class="date">').text(`(${time} | ${date}): `)
+        .append($('<span class="msg">').text(`${data.msg}`))));
     });
 
     $("#chatForm").submit((event) => {
@@ -76,8 +78,8 @@ $(document).ready(() => {
       
     $("#loginForm").submit((event) => {
       event.preventDefault();                                 // Prevents page reloading
-      // console.log($('#username').val(), $('#room').val());
-      editUser($('#username').val(), $('#room').val());       // Sends input value to server
+      // console.log($('#username').val());
+      editUser($('#username').val());       // Sends input value to server
       $loginContainer.hide();
       $chatContainer.show();
 
